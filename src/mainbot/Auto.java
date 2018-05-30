@@ -15,7 +15,6 @@ public class Auto {
 
 	public static void main(String[] args) throws AWTException {
 		// TODO Auto-generated method stub
-		System.out.print("123456");
 		
 		Robot robot = new Robot();
 		
@@ -24,9 +23,8 @@ public class Auto {
 		BufferedImage img = null;
 		
 		try {
-			System.out.println("111");
-		    img = ImageIO.read(new File("c:/automata/img/ocr_1.png"));
-		    System.out.println("222");
+			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		    img = ImageIO.read(new File("ocr_1.png"));
 		    System.out.println(img.getHeight());
 		    byte[] pixels = ((DataBufferByte) img.getRaster().getDataBuffer()).getData();
 		    System.out.println(pixels.length);
