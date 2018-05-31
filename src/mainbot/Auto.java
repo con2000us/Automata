@@ -69,7 +69,7 @@ public class Auto {
 		
         try {
     		BufferedImage in = ImageIO.read(imageFile);
-    		BufferedImage in3 = resize(in,720,210);
+    		BufferedImage in3 = resize(in,in.getWidth()*5,in.getHeight()*5);
         	instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
             String result = instance.doOCR(in3);
             System.out.println(result);
