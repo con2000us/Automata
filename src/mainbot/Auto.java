@@ -50,15 +50,15 @@ public class Auto {
 //		}
 		
         try {
-        	instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
-        	//instance.setLanguage("na");	
+        	//instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
+        	instance.setLanguage("ms");	
         	BufferedImage in = ImageIO.read(imageFile);
     		
 
         	
 
         	
-        	int su = 3;
+        	int su = 2;
     		for(int id=0;id<25;id++) {
 	        	BufferedImage ins = in.getSubimage(ILD.Locs[id].mon_x, ILD.Locs[id].mon_y, ILD.Locs[id].mon_width, ILD.Locs[id].mon_height);
 	        	
