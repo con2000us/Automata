@@ -22,67 +22,82 @@ import net.sourceforge.tess4j.ITessAPI.TessBaseAPI;
 
 public class Auto {
 	
+	public static int off_x;
+	public static int off_y;
 
 	public static void main(String[] args) throws AWTException, IOException {
 		// TODO Auto-generated method stub
-		//File imageFile = new File("eurotext.png");
-		File imageFile = new File("ocr_2.png");
 		
 
+		File imageFile = new File("ocr_1.png");
+		ImgLocData ILD = new ImgLocData();
+		
+		off_x = 1920;
+		off_y = 0;
 		
 		ITesseract instance = new Tesseract();  // JNA Interface Mapping
 		instance.setLanguage("eng");
 		Robot robot = new Robot();
-		Color color;
-		
-		robot.mouseMove(300,300);
 		
 		BufferedImage img = null;
 		
-		try {
-			System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		    img = ImageIO.read(new File("ocr_1.png"));
-		    //System.out.println(img.getHeight());
-		    byte[] pixels = ((DataBufferByte) img.getRaster().getDataBuffer()).getData();
-		    //System.out.println(pixels.length);
-		    
-
-//		    for(int i=185;i<=197;i++) {
-//		    	for(int j=2720;j<=2760;j++){
-//			    	color = robot.getPixelColor(j, i);
-//			    	if(color.getRed()+color.getGreen()+color.getBlue() > 200){
-//				    	System.out.print(" ");
-//			    	}else {
-//				    	System.out.print("@");
-//			    	}
+//		try {
+//			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//		    img = ImageIO.read(new File("ocr_1.png"));
+// 
 //
-//		    	}
-//		    	System.out.println("|");
-//	
-//		    }
-//	    	robot.mouseMove(2720,185);
-//	    	robot.mouseMove(2760,197);
-//	    	robot.mousePress(InputEvent.BUTTON1_MASK);
-//	        robot.mouseRelease(InputEvent.BUTTON1_MASK);
-		} catch (IOException e) {
-		}
+//		} catch (IOException e) {
+//		}
 		
         try {
-    		BufferedImage in = ImageIO.read(imageFile);
-    		BufferedImage in3 = resize(in,in.getWidth()*5,in.getHeight()*5);
         	instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
-            String result = instance.doOCR(in3);
-            System.out.println(result);
+        	//instance.setLanguage("na");	
+        	BufferedImage in = ImageIO.read(imageFile);
+    		
+
+        	
+
+        	
+        	int su = 3;
+    		for(int id=0;id<25;id++) {
+	        	BufferedImage ins = in.getSubimage(ILD.Locs[id].mon_x, ILD.Locs[id].mon_y, ILD.Locs[id].mon_width, ILD.Locs[id].mon_height);
+	        	
+	    		int w = Color.white.getRGB();
+	    		int b = Color.black.getRGB();
+	    		
+	    		for(int i = 0;i<in.getHeight();i++) {
+	    			for(int j = 0;j<in.getWidth();j++) {
+	    				int r = (in.getRGB(j, i) >> 16) & 0x000000FF;
+	    				if(r > 70) {
+	    					//System.out.print(" ");
+	    					in.setRGB(j, i, w);
+	    				}else {
+	    					//System.out.print("@");
+	    					in.setRGB(j, i, b);
+	    				}
+	    			}
+	    			//System.out.println();
+	    		}
+	        	
+	        	BufferedImage inB = resize(ins,ins.getWidth()*su,ins.getHeight()*su);
+	        	String result = instance.doOCR(inB);
+	            System.out.println(result);
+	            File outputfile = new File("output"+id+".png");
+	            ImageIO.write(inB, "png", outputfile);
+    		}
+
             
-            File outputfile = new File("output.png");
-            ImageIO.write(in3, "png", outputfile);
             
             
+            //robot.mouseMove(off_x+849,124);
+
 
         } catch (TesseractException e) {
             System.err.println(e.getMessage());
         }
 	}
+	
+	
     private static BufferedImage resize(BufferedImage img, int width, int height) {
         Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
