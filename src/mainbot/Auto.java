@@ -72,28 +72,28 @@ public class Auto {
 	        	
 	    		int w = Color.white.getRGB();
 	    		int b = Color.black.getRGB();
-	    		int g = Color.green.getRGB();
+	    		//int g = Color.green.getRGB();
 	    		
-	    		int[][] back = new int[in.getWidth()][in.getHeight()];
-	    		int[][] temp = new int[in.getWidth()][in.getHeight()];
+	    		int[][] back = new int[ins.getWidth()][ins.getHeight()];
+	    		int[][] temp = new int[ins.getWidth()][ins.getHeight()];
 	    		
-//	    		for(int i = 0;i<in.getHeight();i++) {
-//	    			for(int j = 0;j<in.getWidth();j++) {
-//	    				back[j][i] = 0;
-//	    				temp[j][i] = 0;
-//	    			}
-//	    		}
+	    		for(int i = 0;i<ins.getHeight();i++) {
+	    			for(int j = 0;j<ins.getWidth();j++) {
+	    				back[j][i] = 0;
+	    				temp[j][i] = 0;
+	    			}
+	    		}
 	    		
-	    		for(int i = 0;i<in.getHeight();i++) {
-	    			for(int j = 0;j<in.getWidth();j++) {
-	    				int r = (in.getRGB(j, i) >> 16) & 0x000000FF;
+	    		for(int i = 0;i<ins.getHeight();i++) {
+	    			for(int j = 0;j<ins.getWidth();j++) {
+	    				int r = (ins.getRGB(j, i) >> 16) & 0x000000FF;
 	    				if(r > 70) {
 	    					//System.out.print(" ");
-	    					in.setRGB(j, i, w);
+	    					ins.setRGB(j, i, w);
 	    					back[j][i] = 0;
 	    				}else {
 	    					//System.out.print("@");
-	    					in.setRGB(j, i, b);
+	    					ins.setRGB(j, i, b);
 	    					back[j][i] = 1;
 	    				}
 	    				if(i>0 && j>0 && back[j][i-1] > 0 && back[j-1][i] > 0 && back[j-1][i-1] > 0) {
@@ -108,10 +108,10 @@ public class Auto {
 	    			//System.out.println();
 	    		}
 
-	    		for(int i = 0;i<in.getHeight();i++) {
-	    			for(int j = 0;j<in.getWidth();j++) {
+	    		for(int i = 0;i<ins.getHeight();i++) {
+	    			for(int j = 0;j<ins.getWidth();j++) {
 	    				if(temp[j][i] == 1) {
-	    					in.setRGB(j, i, g);
+	    					ins.setRGB(j, i, b);
 	    				}
 	    			}
 	    		}
