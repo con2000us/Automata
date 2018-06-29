@@ -1,10 +1,11 @@
 package mainbot;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class PatternBuilder {
-	ArrayList pal = new ArrayList<Object>();
+	ArrayList<Object> pal = new ArrayList<Object>();
 	
 	
 	public void add_pattern(BufferedImage in,String name) {
@@ -14,7 +15,8 @@ public class PatternBuilder {
 		int[][] featureMap = new int[img_w][img_h];
 		int feature_sum = (img_h-2)*(img_w-2);
 		int[] feature_hist = new int[512];
-		ArrayList[] feature_hist_loc = new ArrayList[512];
+		@SuppressWarnings("unchecked")
+		ArrayList<Point>[] feature_hist_loc = new ArrayList[512];
 		int[] feature_index = new int[feature_sum+1];
 		
 		for(int i = 0;i<img_h;i++) {
@@ -45,11 +47,11 @@ public class PatternBuilder {
 						imgData[j][i] << 4 | imgData[j+1][i] << 3 | imgData[j-1][i+1] << 2 | imgData[j][i+1] << 1 |
 						imgData[j+1][i+1];
 				if(feature_hist[featureMap[j][i]] == 0) {
-					feature_hist_loc[featureMap[j][i]] = new ArrayList();
+					feature_hist_loc[featureMap[j][i]] = new ArrayList<Point>();
 				}
 				feature_hist[featureMap[j][i]]++;
-				feature_hist_loc[featureMap[j][i]].add(j);
-				feature_hist_loc[featureMap[j][i]].add(i);
+				feature_hist_loc[featureMap[j][i]].add(new Point(j,i));
+				
 			}
 		}
 		
@@ -73,8 +75,8 @@ public class PatternBuilder {
 		while(feature_index[counter] > -1) {
 			System.out.println(feature_index[counter] + " -> " + feature_hist[feature_index[counter]]);
 			
-			for(int i=0;i<feature_hist_loc[feature_index[counter]].size();i+=2) {
-				System.out.println("@" + feature_hist_loc[feature_index[counter]].get(i) + "," + feature_hist_loc[feature_index[counter]].get(i+1));
+			for(int i=0;i<feature_hist_loc[feature_index[counter]].size();i++) {
+				System.out.println("@" + feature_hist_loc[feature_index[counter]].get(i).x + "," + feature_hist_loc[feature_index[counter]].get(i).y);
 			}
 			
 			counter++;
