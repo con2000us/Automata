@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.geom.AffineTransform;
@@ -27,6 +28,7 @@ public class Auto {
 	public static int off_x;
 	public static int off_y;
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws AWTException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -50,12 +52,14 @@ public class Auto {
     	
     	
     	PatternBuilder pb = new PatternBuilder();
-    	String[] inn = {"0","1","2","3","4","5","6","7","8","9","0","."};
+    	String[] inn = {"0","1","2","3","4","5","6","7","8","9","."};
     	for(int i=0;i<11;i++) {
     		pb.add_pattern(ImageIO.read(new File("pattern/p_"+i+".png")),inn[i]);
+    		pb.buildFeatureCloud(inn[i],30);
     	}
-    	
-    	
+
+    	System.out.println(pb.getPal().get(10).get("name"));
+    	System.out.println(((ArrayList<Point>)(pb.getPal().get(10).get("pairedFP"))).size());
 //    	
 //        try {
 //        	instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
