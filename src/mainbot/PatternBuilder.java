@@ -8,7 +8,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class PatternBuilder {
-	ArrayList<HashMap> pal = new ArrayList<HashMap>();	
+	ArrayList<HashMap> pal = new ArrayList<HashMap>();
+	ArrayList<HashMap>[] mesh = new ArrayList[512];
 	
 	public void add_pattern(BufferedImage in,String name) {
 		int img_w = in.getWidth();
@@ -169,6 +170,12 @@ public class PatternBuilder {
 		}
 	}
 	
+	public void cleanFeatureCloud() {
+		for(int i=0;i<512;i++) {
+			mesh[i] = new ArrayList<HashMap>();
+		}
+	}
+
 	public ArrayList<HashMap> getPal() {
 		return pal;
 	}

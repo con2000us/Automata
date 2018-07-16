@@ -54,12 +54,13 @@ public class Auto {
     	PatternBuilder pb = new PatternBuilder();
     	String[] inn = {"0","1","2","3","4","5","6","7","8","9","."};
     	for(int i=0;i<11;i++) {
-    		pb.add_pattern(ImageIO.read(new File("pattern/p_"+i+".png")),inn[i]);
+    		pb.add_pattern(ImageIO.read(new File("pattern/a/p_"+i+".png")),inn[i]);
     		pb.buildFeatureCloud(inn[i],30);
     	}
 
     	System.out.println(pb.getPal().get(10).get("name"));
     	System.out.println(((ArrayList<Point>)(pb.getPal().get(10).get("pairedFP"))).size());
+    	
 //    	
 //        try {
 //        	instance.setTessVariable("tessedit_char_whitelist", "1234567890.");
